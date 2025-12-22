@@ -39,8 +39,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # Set up Docker Buildx (nếu cần multi-platform)
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
 
       # Cài ansible-builder
       - name: Install ansible-builder
