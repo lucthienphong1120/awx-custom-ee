@@ -1,10 +1,15 @@
 name: Build & Push Custom EE on Tag
 
-# Chỉ chạy khi push tag git, ví dụ: "2.15-centos"
+# Chỉ chạy khi tag, ví dụ: "2.15-centos"
 on:
   push:
     tags:
-      - '*'
+      - '*'              # Tự động chạy khi push tag
+  workflow_dispatch:     # Chạy thủ công
+    inputs:
+      tag:
+        description: "Tag dùng để build/push (VD: 2.15-centos)"
+        required: true
 
 jobs:
   build_and_push:
@@ -33,14 +38,24 @@ jobs:
           sudo apt-get install -y python3-pip
           pip3 install ansible-builder
 
+      # Xác định tag từ Git event
+      - name: Determine TAG
+        id: vars
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            TAG="${GITHUB_REF#refs/tags/}"
+          else
+            TAG="${{ github.event.inputs.tag }}"
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
       # Build image bằng ansible-builder
       - name: Build EE image
         run: |
-          TAG=${GITHUB_REF#refs/tags/}   # Lấy tag từ Git
-          ansible-builder build -t ltp1120/awx-custom-ee:$TAG -v 3
+          ansible-builder build -t ltp1120/awx-custom-ee:${{ steps.vars.outputs.tag }} -v 3
 
       # Push image lên Docker Hub
       - name: Push image to Docker Hub
         run: |
           TAG=${GITHUB_REF#refs/tags/}
-          docker push ltp1120/awx-custom-ee:$TAG
+          docker push ltp1120/awx-custom-ee:${{ steps.vars.outputs.tag }}
