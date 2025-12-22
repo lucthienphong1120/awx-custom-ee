@@ -1,14 +1,12 @@
-name: Build & Push Custom EE
+name: Build & Push Custom EE on tag
 
 on:
-  push:
-    tags: ['*']          # Chạy khi push tag từ máy hoặc tạo tag trên UI
   release:
-    types: [published]   # Chạy khi bạn "Publish" một bản Release trên UI
+    types: [published]   # Chạy khi bạn "Publish" và tag một bản Release trên UI
   workflow_dispatch:     # Chạy thủ công
     inputs:
       tag:
-        description: "Tag dùng để build/push (VD: 2.15-centos)"
+        description: "Tag dùng để build (VD: 2.15-centos)"
         required: true
 
 jobs:
