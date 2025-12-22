@@ -1,0 +1,8 @@
+curl-minimal
+wget
+openssh-clients
+sshpass
+git-core
+iputils
+nmap-ncat
+which

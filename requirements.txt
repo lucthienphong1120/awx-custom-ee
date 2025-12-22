@@ -1,0 +1,6 @@
+boto3
+pywinrm
+netaddr
+requests
+PyYAML
+Jinja2
