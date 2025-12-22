@@ -1,0 +1,32 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Print variables for debugging
+      ansible.builtin.debug:
+        var: data
+      vars:
+        data:
+          ansible_playbook_python: "{{ ansible_playbook_python }}"
+          ansible_python_version: "{{ ansible_python_version }}"
+          ansible_python.executable: "{{ ansible_python.executable }}"
+          ansible_version.full: "{{ ansible_version.full }}"
+
+    - name: Invoke debug commands
+      ansible.builtin.command: "{{ item }}"
+      loop:
+        - cat /etc/os-release
+        - whoami
+        - pwd
+        - ansible --version
+        - pip3 list
+        - ansible-galaxy collection list
+        - rpm -qa
+      register: command_results
+
+    - ansible.builtin.debug:
+        msg: "{{ item.stdout_lines }}"
+      loop: "{{ command_results.results }}"
+      loop_control:
+        label: "{{ item.cmd }}"
+
