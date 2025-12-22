@@ -1,7 +1,7 @@
 # AWX Custom EE
 Ansible AWX custom Execution Environment (EE)
 
-More information: https://hub.docker.com/repository/docker/ltp1120/awx-custom-ee
+More information: https://hub.docker.com/r/ltp1120/awx-custom-ee
 
 ## Prepare
 
