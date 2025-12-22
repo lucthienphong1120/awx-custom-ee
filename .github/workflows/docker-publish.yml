@@ -51,11 +51,17 @@ jobs:
 
       # Build image bằng ansible-builder
       - name: Build EE image
-        run: |
-          ansible-builder build -t ltp1120/awx-custom-ee:${{ steps.vars.outputs.tag }} -v 3
+        run: ansible-builder build -t ansible/ee:custom -v 3
+
+      - name: List docker images after build
+        run: docker image ls
+      
+      - name: Fix image tag from localhost to registry format
+        run: docker tag localhost/ansible/ee:custom ltp1120/awx-custom-ee:${{ steps.vars.outputs.tag }}
+      
+      - name: List docker images after retag
+        run: docker image ls
 
       # Push image lên Docker Hub
       - name: Push image to Docker Hub
-        run: |
-          TAG=${GITHUB_REF#refs/tags/}
-          docker push ltp1120/awx-custom-ee:${{ steps.vars.outputs.tag }}
+        run: docker push ltp1120/awx-custom-ee:${{ steps.vars.outputs.tag }}
