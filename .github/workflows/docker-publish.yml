@@ -1,10 +1,10 @@
-name: Build & Push Custom EE on Tag
+name: Build & Push Custom EE
 
-# Chỉ chạy khi tag, ví dụ: "2.15-centos"
 on:
   push:
-    tags:
-      - '*'              # Tự động chạy khi push tag
+    tags: ['*']          # Chạy khi push tag từ máy hoặc tạo tag trên UI
+  release:
+    types: [published]   # Chạy khi bạn "Publish" một bản Release trên UI
   workflow_dispatch:     # Chạy thủ công
     inputs:
       tag:
@@ -20,16 +20,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Xác định tag từ Git event
+      # Logic xác định TAG từ Git event
       - name: Determine TAG
         id: vars
         run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            TAG="${GITHUB_REF#refs/tags/}"
-          else
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             TAG="${{ github.event.inputs.tag }}"
+          elif [ "${{ github.event_name }}" = "release" ]; then
+            TAG="${{ github.event.release.tag_name }}"
+          else
+            # Trường hợp push tag: GITHUB_REF là refs/tags/v1.0.0
+            TAG="${GITHUB_REF#refs/tags/}"
           fi
           echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "Building with tag: $TAG"
 
       # Login vào Docker Hub
       - name: Log in to Docker Hub
