@@ -51,7 +51,7 @@ jobs:
 
       # Build image bằng ansible-builder
       - name: Build EE image
-        run: ansible-builder build -t ansible/ee:custom -v 3
+        run: ansible-builder build -t ansible/ee:custom --container-runtime docker -v 3
 
       - name: List docker images after build
         run: docker image ls
