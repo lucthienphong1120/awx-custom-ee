@@ -5,5 +5,6 @@ collections:
   - name: ansible.netcommon
   - name: community.general
   - name: community.crypto
+  - name: community.docker
   - name: community.vmware
-    version: "< 4.0.0"
+    version: "<4.0.0"
