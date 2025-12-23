@@ -10,8 +10,12 @@ on:
         required: true
 
 jobs:
+# JOB 1: BUILD VÀ PUSH
   build_and_push:
     runs-on: ubuntu-latest
+    # Khai báo output để job sau có thể lấy được giá trị TAG
+    outputs:
+      tag: ${{ steps.vars.outputs.tag }}
 
     steps:
       # Checkout source code
@@ -57,3 +61,30 @@ jobs:
       # Push image lên Docker Hub
       - name: Push image to Docker Hub
         run: docker push ltp1120/awx-custom-ee:${{ steps.vars.outputs.tag }}
+
+# JOB 2: TEST IMAGE VỪA PUSH
+  test_ee:
+    runs-on: ubuntu-latest
+    # Chỉ chạy khi job trên thành công 
+    needs: build_and_push
+    
+    steps:
+      # Checkout source code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Cài ansible-runner
+      - name: Install ansible-runner
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install ansible-runner
+
+      # Lưu ý: Ta dùng image vừa push lên Docker Hub (ltp1120/...) để test thực tế nhất
+      - name: Run test with ansible-runner
+        run: |
+          ansible-runner run . \
+            --process-isolation \
+            --process-isolation-executable=docker \
+            --container-image ltp1120/awx-custom-ee:${{ needs.build_and_push.outputs.tag }} \
+            -p demo.yml
