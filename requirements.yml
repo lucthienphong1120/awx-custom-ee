@@ -1,10 +1,23 @@
 ---
 collections:
+  # - name: amazon.aws
+  - name: ansible.netcommon
   - name: ansible.posix
   - name: ansible.utils
-  - name: ansible.netcommon
-  - name: community.general
+  - name: ansible.windows
+  # - name: azure.azcollection
+  # - name: cisco.ios
+  # - name: community.aws
+  # - name: community.azure
   - name: community.crypto
+  - name: community.dns
   - name: community.docker
+  - name: community.general
+  - name: community.network
   - name: community.vmware
     version: "<4.0.0"
+  - name: community.windows
+  # - name: google.cloud
+  # - name: kubernetes.core
+  # - name: microsoft.ad
+  # - name: openstack.cloud
