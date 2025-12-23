@@ -4,3 +4,4 @@ netaddr
 requests
 PyYAML
 Jinja2
+six
