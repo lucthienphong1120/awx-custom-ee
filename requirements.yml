@@ -15,7 +15,6 @@ collections:
   - name: community.general
   - name: community.network
   - name: community.vmware
-    version: "<4.0.0"
   - name: community.windows
   # - name: google.cloud
   # - name: kubernetes.core
