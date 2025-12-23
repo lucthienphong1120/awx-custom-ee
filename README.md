@@ -5,7 +5,11 @@ Ansible AWX custom Execution Environment (EE)
 
 More information: https://hub.docker.com/r/ltp1120/awx-custom-ee
 
-Note: AWX Offical EE image is based on Centos, so this repo build from scratch with centos minimal
+Note: AWX Offical EE image is based on Centos, so this repo build from scratch with centos minimal (Check out the [compatible version](https://quay.io/repository/ansible/awx-ee?tab=tags))
++ Base OS
++ Python version
++ Ansible core version
++ Ansible runner version
 
 P/s: I tried with ubuntu/debian image but it's not working, because the [builder is intentionally designed to work only with RHEL](https://github.com/ansible/ansible-builder/issues/636)
 
