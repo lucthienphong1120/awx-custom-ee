@@ -22,3 +22,7 @@ dependencies:
 additional_build_files:
   - src: ansible.cfg
     dest: ./
+
+additional_build_steps:
+  append_base:
+    - RUN pip3 install --upgrade pip setuptools
