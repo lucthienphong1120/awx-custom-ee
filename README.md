@@ -1,11 +1,11 @@
 # AWX Custom EE
 Ansible AWX custom Execution Environment (EE)
 
-## References
-
 More information: https://hub.docker.com/r/ltp1120/awx-custom-ee
 
-Note: AWX Offical EE image is based on Centos, so this repo build from scratch with centos minimal (Check out the [compatible version](https://quay.io/repository/ansible/awx-ee?tab=tags))
+## References
+
+AWX Offical EE image is based on Centos, so this repo build from scratch with centos minimal (Check out the [compatible version](https://quay.io/repository/ansible/awx-ee?tab=tags))
 + Base OS: centos/centos:stream9
 + Python version: python3.11
 + Ansible core version: ansible-core>=2.15.0rc2,<2.16
